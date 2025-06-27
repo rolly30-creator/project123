@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Set your bucket name here
+BUCKET_NAME="your-bucket-name"
+
+# Check AWS credentials and S3 access
+echo "Checking AWS credentials and S3 availability..."
+
+# Test AWS CLI access to S3 (list buckets)
+if aws s3 ls >/dev/null 2>&1; then
+    echo "✅ AWS S3 is accessible."
+
+    # Check if the specific bucket exists
+    if aws s3 ls "s3://$BUCKET_NAME" >/dev/null 2>&1; then
+        echo "✅ Bucket '$BUCKET_NAME' is accessible."
+    else
+        echo "⚠️  Bucket '$BUCKET_NAME' does not exist or is not accessible."
+    fi
+else
+    echo "❌ Unable to access S3. Check your AWS credentials or network connection."
+fi
